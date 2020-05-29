@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-//Audio Player
+//Audio Player and cache
 import 'package:audioplayers/audioplayers.dart';
+import 'package:audioplayers/audio_cache.dart';
 
 void main() {
   runApp(MyApp()); //Use to run MyApp class
@@ -19,33 +20,21 @@ class _MyAppState extends State<MyApp> {
   //That underscore indicates that this class is a private class
   //Need to use State<MyApp> to connect this state to the app
 
-  final _questions = const [
-    //Compile time constant (implying run-time constant)
-    {
-      'questionText': "What's BT's height?",
-      'answers': [
-        {'text': "5'6", 'score': 0},
-        {'text': "5'7", 'score': 0},
-        {'text': "5'10", 'score': 1}
-      ]
-    },
-    {
-      'questionText': "What is BT's birthday?",
-      'answers': [
-        {'text': "4/20", 'score': 1},
-        {'text': "8/7", 'score': 0},
-        {'text': "9/12", 'score': 0}
-      ]
-    },
-    {
-      'questionText': "What is BT's favorite fruit?",
-      'answers': [
-        {'text': "Banana", 'score': 0},
-        {'text': "Pear", 'score': 0},
-        {'text': "Mango", 'score': 1}
-      ]
-    }
-  ];
+  AudioPlayer player;
+  AudioCache audioCache; //TODO: Do I need an audio cache?
+
+  //initState gets called upon start
+  @override
+  void initState() {
+    _initPlayer();
+    super.initState();
+  }
+
+  void _initPlayer() {
+    player = AudioPlayer();
+    audioCache = AudioCache(fixedPlayer: player); //set the player to be used
+  }
+
   var _questionIndex = 0;
   var _totalScore = 0;
 
@@ -76,11 +65,22 @@ class _MyAppState extends State<MyApp> {
         navigationBar: CupertinoNavigationBar(
           middle: Text('Pitch Trainer'),
         ),
-        child: Center(
-          child: CupertinoButton.filled(
-            onPressed: () {},
-            child: Text("Play Reference Tone"),
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(50.0),
+                child: CupertinoButton.filled(
+                  onPressed: () {
+                    audioCache.play('c3.mp3');
+                  },
+                  child: Text("Play Reference Tone (C4)"),
+                ),
+              ),
+            ),
+            //your elements here
+          ],
         ),
       ),
     );
