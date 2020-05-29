@@ -75,7 +75,10 @@ class _MyAppState extends State<MyApp> {
                   onPressed: () {
                     audioCache.play('c3.mp3');
                   },
-                  child: Text("Play Reference Tone (C4)"),
+                  child: Text(
+                    "Play Reference Tone (C4)",
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
             ),
