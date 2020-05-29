@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-//Audio Player and cache
-import 'package:audioplayers/audioplayers.dart';
-import 'package:audioplayers/audio_cache.dart';
 
+import './referenceTone.dart';
 void main() {
   runApp(MyApp()); //Use to run MyApp class
 }
@@ -20,20 +18,6 @@ class _MyAppState extends State<MyApp> {
   //That underscore indicates that this class is a private class
   //Need to use State<MyApp> to connect this state to the app
 
-  AudioPlayer player;
-  AudioCache audioCache; //TODO: Do I need an audio cache?
-
-  //initState gets called upon start
-  @override
-  void initState() {
-    _initPlayer();
-    super.initState();
-  }
-
-  void _initPlayer() {
-    player = AudioPlayer();
-    audioCache = AudioCache(fixedPlayer: player); //set the player to be used
-  }
 
   var _questionIndex = 0;
   var _totalScore = 0;
@@ -71,15 +55,7 @@ class _MyAppState extends State<MyApp> {
             Center(
               child: Padding(
                 padding: const EdgeInsets.all(50.0),
-                child: CupertinoButton.filled(
-                  onPressed: () {
-                    audioCache.play('c3.mp3');
-                  },
-                  child: Text(
-                    "Play Reference Tone (C4)",
-                    textAlign: TextAlign.center,
-                  ),
-                ),
+                child: ReferenceTone(),
               ),
             ),
             //your elements here
