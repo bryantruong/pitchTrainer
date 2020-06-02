@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+//Use for the random answer choice
+import "dart:math";
 
 import './referenceTone.dart';
 import './answerChoices.dart';
 import './quizTone.dart';
+import './models/questionModel.dart';
 
 void main() {
   runApp(MyApp()); //Use to run MyApp class
@@ -22,9 +25,41 @@ class _MyAppState extends State<MyApp> {
   //That underscore indicates that this class is a private class
   //Need to use State<MyApp> to connect this state to the app
 
-//TODO: Going to make the quiz stop at 10 questions.
+  @override
+  void initState(){
+    currentQuestion = generateQuestionObject();
+    print(currentQuestion);
+  }
+
+  List<QuestionModel> currentQuestion;
   var _questionIndex = 0;
   var _totalScore = 0;
+  final possibleOptions = ["d4", "e4", "f4", "g4", "a4", "b4", "c5"];
+
+//----------------------------- BEGIN FUNCTIONS ---------------------------------------
+  List<QuestionModel> generateQuestionObject() {
+    List<String> answerList = List<String>();
+    //Create a random list of answers
+    while (answerList.length < 5) {
+      // generates a new Random object
+      final _random = new Random();
+      // generate a random index based on the list length
+      // and use it to retrieve the element
+      int _randomIndex = _random.nextInt(possibleOptions.length);
+      String _randomOption = possibleOptions[_randomIndex];
+      //Only add it to the answerList if it isn't already there
+      if (answerList.contains(_randomOption)){
+        continue;
+      } else {
+        answerList.add(_randomOption);
+      }
+    }
+    //Randomly select one of those answer choices to be the question
+    final _random2 = new Random();
+    String question = answerList[_random2.nextInt(answerList.length)];
+    QuestionModel newQuestion = QuestionModel(question: question, answers: answerList);
+    return [newQuestion];
+  }
 
   void _resetQuiz() {
     setState(() {
@@ -57,7 +92,7 @@ class _MyAppState extends State<MyApp> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(bottom:8.0),
+              padding: const EdgeInsets.only(bottom: 8.0),
               child: Text(
                 "Play New Tone!",
                 style: TextStyle(color: CupertinoColors.activeBlue),
