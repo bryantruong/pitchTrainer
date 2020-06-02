@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import './referenceTone.dart';
+import './answerChoices.dart';
+import './quizTone.dart';
+
 void main() {
   runApp(MyApp()); //Use to run MyApp class
 }
@@ -18,7 +22,7 @@ class _MyAppState extends State<MyApp> {
   //That underscore indicates that this class is a private class
   //Need to use State<MyApp> to connect this state to the app
 
-
+//TODO: Going to make the quiz stop at 10 questions.
   var _questionIndex = 0;
   var _totalScore = 0;
 
@@ -52,13 +56,21 @@ class _MyAppState extends State<MyApp> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(bottom:8.0),
+              child: Text(
+                "Play New Tone!",
+                style: TextStyle(color: CupertinoColors.activeBlue),
+              ),
+            ),
+            QuizTone('d4'),
+            AnswerChoices(),
             Center(
               child: Padding(
-                padding: const EdgeInsets.all(50.0),
+                padding: const EdgeInsets.all(40.0),
                 child: ReferenceTone(),
               ),
             ),
-            //your elements here
           ],
         ),
       ),

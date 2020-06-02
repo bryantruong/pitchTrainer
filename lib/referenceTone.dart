@@ -33,11 +33,11 @@ class _ReferenceToneState extends State<ReferenceTone> {
     return Container(
        child: CupertinoButton.filled(
                   onPressed: () {
-                    audioCache.play('c3.mp3');
+                    audioCache.play('c4.mp3');
                   },
                   child: Text(
                     "Play Reference Tone (C4)",
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.center, 
                   ),
                 ),
     );
