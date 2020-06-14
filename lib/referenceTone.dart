@@ -4,7 +4,6 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:audioplayers/audio_cache.dart';
 
 class ReferenceTone extends StatefulWidget {
-  ReferenceTone({Key key}) : super(key: key);
 
   @override
   _ReferenceToneState createState() => _ReferenceToneState();

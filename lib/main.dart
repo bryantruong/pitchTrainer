@@ -4,10 +4,9 @@ import 'package:flutter/services.dart';
 //Use for the random answer choice
 import "dart:math";
 
-import './referenceTone.dart';
-import './answerChoices.dart';
-import './quizTone.dart';
+import './quiz.dart';
 import './models/questionModel.dart';
+import './results.dart';
 
 void main() {
   runApp(MyApp()); //Use to run MyApp class
@@ -26,7 +25,7 @@ class _MyAppState extends State<MyApp> {
   //Need to use State<MyApp> to connect this state to the app
 
   @override
-  void initState(){
+  void initState() {
     currentQuestion = generateQuestionObject();
     print(currentQuestion);
   }
@@ -39,7 +38,7 @@ class _MyAppState extends State<MyApp> {
 //----------------------------- BEGIN FUNCTIONS ---------------------------------------
   List<QuestionModel> generateQuestionObject() {
     List<String> answerList = List<String>();
-    //Create a random list of answers
+    //Create a random list of answers. 5 because we only want 5 options
     while (answerList.length < 5) {
       // generates a new Random object
       final _random = new Random();
@@ -48,7 +47,7 @@ class _MyAppState extends State<MyApp> {
       int _randomIndex = _random.nextInt(possibleOptions.length);
       String _randomOption = possibleOptions[_randomIndex];
       //Only add it to the answerList if it isn't already there
-      if (answerList.contains(_randomOption)){
+      if (answerList.contains(_randomOption)) {
         continue;
       } else {
         answerList.add(_randomOption);
@@ -57,7 +56,8 @@ class _MyAppState extends State<MyApp> {
     //Randomly select one of those answer choices to be the question
     final _random2 = new Random();
     String question = answerList[_random2.nextInt(answerList.length)];
-    QuestionModel newQuestion = QuestionModel(question: question, answers: answerList);
+    QuestionModel newQuestion =
+        QuestionModel(question: question, answers: answerList);
     return [newQuestion];
   }
 
@@ -88,26 +88,8 @@ class _MyAppState extends State<MyApp> {
         navigationBar: CupertinoNavigationBar(
           middle: Text('Pitch Trainer'),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                "Play New Tone!",
-                style: TextStyle(color: CupertinoColors.activeBlue),
-              ),
-            ),
-            QuizTone('d4'),
-            AnswerChoices(),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(40.0),
-                child: ReferenceTone(),
-              ),
-            ),
-          ],
-        ),
+        // child: Result(),
+        child: Quiz(currentQuestion[_questionIndex]),
       ),
     );
   }
