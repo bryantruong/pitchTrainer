@@ -76,11 +76,12 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  void _answerQuestion() {
-    print("function called");
-    // if (correctness){
-    //   _totalScore += 1;
-    // }
+  void _answerQuestion(bool correctness) {
+    print("Answer question called");
+    print(correctness);
+    if (correctness == true){
+      _totalScore += 1;
+    }
     setState(() {
       //Use setState() to indicate what variables need to be listened on
       _questionIndex = _questionIndex + 1;

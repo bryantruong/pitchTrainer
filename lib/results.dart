@@ -13,7 +13,8 @@ class Result extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: CupertinoAlertDialog(
-        title: Text(wasCorrect ? "Correct" : "Incorrect"),
+        // title: Text(wasCorrect ? "Correct" : "Incorrect"),
+        title: Text("Results"),
         content: Text("Correct Answer: C5"),
         actions: [CupertinoDialogAction(child: CupertinoButton(onPressed: () {  },
         child: Text("Continue")),)]
