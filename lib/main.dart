@@ -37,7 +37,8 @@ class _MyAppState extends State<MyApp> {
 
 //----------------------------- BEGIN FUNCTIONS ---------------------------------------
   List<QuestionModel> generateQuestionObject() {
-    List<String> answerList = List<String>();
+    List<Map<dynamic, dynamic>> answerList = List();
+    List<String> usedKeys = List();
     //Create a random list of answers. 5 because we only want 5 options
     while (answerList.length < 5) {
       // generates a new Random object
@@ -47,17 +48,23 @@ class _MyAppState extends State<MyApp> {
       int _randomIndex = _random.nextInt(possibleOptions.length);
       String _randomOption = possibleOptions[_randomIndex];
       //Only add it to the answerList if it isn't already there
-      if (answerList.contains(_randomOption)) {
+      if (usedKeys.contains(_randomOption)) {
         continue;
       } else {
-        answerList.add(_randomOption);
+        Map _answerMap = {_randomOption: false};
+        answerList.add(_answerMap);
+        usedKeys.add(_randomOption);
       }
     }
     //Randomly select one of those answer choices to be the question
     final _random2 = new Random();
-    String question = answerList[_random2.nextInt(answerList.length)];
-    QuestionModel newQuestion =
-        QuestionModel(question: question, answers: answerList);
+    Map randomAnswer = answerList[_random2.nextInt(answerList.length)];
+    String question = randomAnswer.keys.toList()[0];
+    //Need to set the corresponding answer value to be true
+    randomAnswer[question] = true;
+    //This does change the original answerList
+    print(question);
+    QuestionModel newQuestion = QuestionModel(question: question, answers: answerList);
     return [newQuestion];
   }
 
