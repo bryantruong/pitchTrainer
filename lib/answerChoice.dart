@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class AnswerChoice extends StatelessWidget {
   final String answerText;
-  AnswerChoice(this.answerText);
-
+  final Function selectHandler;
+  AnswerChoice({this.answerText, this.selectHandler});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -13,7 +14,7 @@ class AnswerChoice extends StatelessWidget {
         color: CupertinoColors.systemGrey5,
         child: Text(answerText,
             style: TextStyle(color: CupertinoColors.activeBlue)),
-        onPressed: () {},
+        onPressed: selectHandler, //Using the name of the method to be ran (no parentheses)
       ),
     );
   }

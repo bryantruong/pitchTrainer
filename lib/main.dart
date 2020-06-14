@@ -64,7 +64,8 @@ class _MyAppState extends State<MyApp> {
     randomAnswer[question] = true;
     //This does change the original answerList
     print(question);
-    QuestionModel newQuestion = QuestionModel(question: question, answers: answerList);
+    QuestionModel newQuestion =
+        QuestionModel(question: question, answers: answerList);
     return [newQuestion];
   }
 
@@ -75,8 +76,11 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  void _answerQuestion(int score) {
-    _totalScore += score;
+  void _answerQuestion() {
+    print("function called");
+    // if (correctness){
+    //   _totalScore += 1;
+    // }
     setState(() {
       //Use setState() to indicate what variables need to be listened on
       _questionIndex = _questionIndex + 1;
@@ -96,7 +100,11 @@ class _MyAppState extends State<MyApp> {
           middle: Text('Pitch Trainer'),
         ),
         // child: Result(),
-        child: Quiz(currentQuestion[_questionIndex]),
+        child: _questionIndex <= 0
+            ? Quiz(
+                questionAndAnswer: currentQuestion[_questionIndex],
+                answerFunction: _answerQuestion)
+            : Result(),
       ),
     );
   }

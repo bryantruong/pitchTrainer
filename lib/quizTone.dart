@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 //Audio Player and cache
 import 'package:audioplayers/audioplayers.dart';
 import 'package:audioplayers/audio_cache.dart';
+void audioPlayerHandler(AudioPlayerState value) => print('Quiz Tone State => $value');
 
 class QuizTone extends StatefulWidget {
   String note;
@@ -26,7 +27,7 @@ class _QuizToneState extends State<QuizTone> {
 
   void _initPlayer() {
     player = AudioPlayer();
-    audioCache = AudioCache(fixedPlayer: player); //set the player to be used
+    audioCache = AudioCache(fixedPlayer: player); //set the player to be used\
   }
 
   @override
@@ -35,7 +36,10 @@ class _QuizToneState extends State<QuizTone> {
       padding: const EdgeInsets.only(bottom: 30.0),
       child: RawMaterialButton(
         onPressed: () {
-          audioCache.play(widget.note +'.mp3');
+          player
+              .monitorNotificationStateChanges(audioPlayerHandler);
+
+          audioCache.play(widget.note + '.mp3');
         },
         elevation: 3.0,
         fillColor: Colors.white,

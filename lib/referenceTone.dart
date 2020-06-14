@@ -3,18 +3,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:audioplayers/audio_cache.dart';
 
-class ReferenceTone extends StatefulWidget {
+void referencePlayerHandler(AudioPlayerState value) =>
+    print('audioPlayerState => $value');
 
+class ReferenceTone extends StatefulWidget {
   @override
   _ReferenceToneState createState() => _ReferenceToneState();
 }
 
 class _ReferenceToneState extends State<ReferenceTone> {
-
   AudioPlayer player;
-  AudioCache audioCache; 
+  AudioCache audioCache;
 
- //initState gets called upon start
+  //initState gets called upon start
   @override
   void initState() {
     _initPlayer();
@@ -26,19 +27,19 @@ class _ReferenceToneState extends State<ReferenceTone> {
     audioCache = AudioCache(fixedPlayer: player); //set the player to be used
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
-       child: CupertinoButton.filled(
-                  onPressed: () {
-                    audioCache.play('c4.mp3');
-                  },
-                  child: Text(
-                    "Play Reference Tone (C4)",
-                    textAlign: TextAlign.center, 
-                  ),
-                ),
+      child: CupertinoButton.filled(
+        onPressed: () {
+          player.monitorNotificationStateChanges(referencePlayerHandler);
+          audioCache.play('c4.mp3');
+        },
+        child: Text(
+          "Play Reference Tone (C4)",
+          textAlign: TextAlign.center,
+        ),
+      ),
     );
   }
 }

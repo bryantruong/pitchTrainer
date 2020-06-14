@@ -8,9 +8,8 @@ import './models/questionModel.dart';
 
 class Quiz extends StatelessWidget {
   QuestionModel questionAndAnswer;
-  Quiz(this.questionAndAnswer);
-//TODO: Initialize a constructor for arguments
-
+  Function answerFunction;
+  Quiz({this.questionAndAnswer, this.answerFunction});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +24,7 @@ class Quiz extends StatelessWidget {
               ),
             ),
             QuizTone(questionAndAnswer.question),
-            AnswerChoices(questionAndAnswer.answers),
+            AnswerChoices(questionAndAnswer.answers, answerFunction),
             Center(
               child: Padding(
                 padding: const EdgeInsets.all(40.0),

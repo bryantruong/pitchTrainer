@@ -3,22 +3,24 @@ import 'package:flutter/material.dart';
 
 import './answerChoice.dart';
 
-class AnswerChoices extends StatefulWidget {
+class AnswerChoices extends StatelessWidget {
   final List<Map<dynamic,dynamic>> possibleOptions;
-  AnswerChoices(this.possibleOptions);
-  @override
-  _AnswerChoicesState createState() => _AnswerChoicesState();
-}
+  final Function answerQuestion;
+  AnswerChoices(this.possibleOptions, this.answerQuestion);
 
-class _AnswerChoicesState extends State<AnswerChoices> {
-  @override 
+    @override 
   Widget build(BuildContext context) {
     return Container(
       child: Column(
           // crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: widget.possibleOptions
-              .map<Widget>((answer) => AnswerChoice(answer.keys.toList()[0]))
+          children: possibleOptions
+              .map<Widget>((answer) => AnswerChoice(
+                answerText: answer.keys.toList()[0],
+                selectHandler: answerQuestion),)
               .toList()),
     );
   }
 }
+
+
+
