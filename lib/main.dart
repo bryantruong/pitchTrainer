@@ -27,13 +27,13 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     currentQuestion = generateQuestionObject();
-    print(currentQuestion);
   }
 
   List<QuestionModel> currentQuestion;
   var _questionIndex = 0;
-  var _totalScore = 0;
+  bool _wasCorrect;
   final possibleOptions = ["d4", "e4", "f4", "g4", "a4", "b4", "c5"];
+  String _correctAnswer;
 
 //----------------------------- BEGIN FUNCTIONS ---------------------------------------
   List<QuestionModel> generateQuestionObject() {
@@ -62,27 +62,25 @@ class _MyAppState extends State<MyApp> {
     String question = randomAnswer.keys.toList()[0];
     //Need to set the corresponding answer value to be true
     randomAnswer[question] = true;
+    _correctAnswer = question;
+    print(_correctAnswer);
     //This does change the original answerList
-    print(question);
     QuestionModel newQuestion =
         QuestionModel(question: question, answers: answerList);
     return [newQuestion];
   }
 
-  void _resetQuiz() {
+  void _resetState() {
     setState(() {
       _questionIndex = 0;
-      _totalScore = 0;
+      _wasCorrect = false;
+      currentQuestion = generateQuestionObject();
     });
   }
 
   void _answerQuestion(bool correctness) {
-    print("Answer question called");
-    print(correctness);
-    if (correctness == true){
-      _totalScore += 1;
-    }
     setState(() {
+      _wasCorrect = correctness;
       //Use setState() to indicate what variables need to be listened on
       _questionIndex = _questionIndex + 1;
     });
@@ -105,7 +103,10 @@ class _MyAppState extends State<MyApp> {
             ? Quiz(
                 questionAndAnswer: currentQuestion[_questionIndex],
                 answerFunction: _answerQuestion)
-            : Result(),
+            : Result(
+                correctAnswer: _correctAnswer,
+                wasCorrect: _wasCorrect,
+                resetState: _resetState),
       ),
     );
   }
