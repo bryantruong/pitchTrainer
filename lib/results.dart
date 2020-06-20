@@ -19,10 +19,8 @@ class Result extends StatelessWidget {
           content: Text(resultPhrase),
           actions: [
             CupertinoDialogAction(
-              child: CupertinoButton(
-                onPressed: resetState,
-                child: Text("Continue"),
-              ),
+              child: Text("Next Question"),
+              onPressed: resetState,
             )
           ]),
     );
