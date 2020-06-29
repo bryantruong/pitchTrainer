@@ -96,7 +96,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       home: CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-          middle: Text('Pitch Trainer'),
+          middle: Text('Relative Pitch Trainer'),
         ),
         // child: Result(),
         child: _questionIndex <= 0
