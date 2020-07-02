@@ -48,6 +48,7 @@ I value your trust in providing us your Personal Information, thus we are strivi
 This Service does not contain links to other sites. 
 
 **Children’s Privacy**
+
 I not knowingly collect personally identifiable information from children under 13, or anyone for that matter\.
 
 **Changes to This Privacy Policy**
